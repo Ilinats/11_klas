@@ -5,7 +5,7 @@ public class Account {
     private static int nextAccountNumber = 0;
     private TypeUser typeUser;
 
-    public Account(String name) {
+    public Account(String name, TypeUser typeUser) {
         this.name = name;
         this.balance = 0;
         this.accountNumber = nextAccountNumber++;
