@@ -21,6 +21,6 @@ public class DrawTopCardOperation implements Operation {
         if (game.getDeck().size() == 0) {
             throw new CardException("ERROR: Not enough cards in deck.");
         }
-        System.out.println(game.getDeck().drawBottomCard());
+        System.out.println(game.getDeck().drawTopCard());
     }
 }

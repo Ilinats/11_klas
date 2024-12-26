@@ -25,6 +25,6 @@ public class DeckFactory {
                 cards.add(new CardImpl(rank, suit));
             }
         }
-        return new DeckImpl(cards, handSize) {};
+        return new DeckImpl(cards, handSize);
     }
 }

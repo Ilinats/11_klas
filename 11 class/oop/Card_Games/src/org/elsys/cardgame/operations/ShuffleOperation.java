@@ -19,7 +19,7 @@ public class ShuffleOperation implements Operation {
 
     @Override
     public void execute() {
-        Collections.shuffle(game.getDeck().getCards());
+        game.getDeck().shuffle();
         System.out.println(game.getDeck());
     }
 }

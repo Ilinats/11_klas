@@ -19,7 +19,7 @@ public class SortOperation implements Operation {
 
     @Override
     public void execute() {
-        game.getDeck().getCards().sort(Comparator.comparing(card -> card.getRank().ordinal()));
+        game.getDeck().sort();
         System.out.println(game.getDeck());
     }
 }
