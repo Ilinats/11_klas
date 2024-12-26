@@ -52,4 +52,19 @@ public abstract class DeckImpl implements Deck {
     public Card drawTopCard() {
         return cards.removeFirst();
     }
+
+    @Override
+    public Card topCard() {
+        return cards.getFirst();
+    }
+
+    @Override
+    public Card drawBottomCard() {
+        return cards.removeLast();
+    }
+
+    @Override
+    public Card bottomCard() {
+        return cards.getLast();
+    }
 }

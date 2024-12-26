@@ -10,4 +10,7 @@ public interface Deck {
     void sort();
     void shuffle();
     Card drawTopCard();
+    Card topCard();
+    Card drawBottomCard();
+    Card bottomCard();
 }
