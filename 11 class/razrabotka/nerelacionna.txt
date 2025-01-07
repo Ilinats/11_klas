@@ -1,0 +1,75 @@
+Courses:
+{
+  "_id": "course_id",
+  "name": "Name",
+  "instructor": {
+    "id": "instructor_id",
+    "name": "Name",
+    "specialization": "Specialization",
+    "email": "email@email.com"
+  },
+  "category": "Category",
+  "duration": "N hours",
+  "modules": [
+    {
+      "module_name": "Name",
+      "content": "Content"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "assignment_id",
+      "title": "Title",
+      "due_date": "YYYY-MM-DD",
+      "description": "Description"
+    }
+  ],
+  "forum_posts": [
+    {
+      "student_id": "student_id",
+      "post": "Post"
+    }
+  ]
+}
+
+Students:
+{
+  "_id": "student_id",
+  "name": "Name",
+  "email": "email@email.com",
+  "phone": "Phone",
+  "enrollments": [
+    {
+      "course_id": "course_id",
+      "enrollment_date": "YYYY-MM-DD"
+    }
+  ],
+  "grades": [
+    {
+      "assignment_id": "assignment_id",
+      "score": 100
+    }
+  ],
+  "payments": [
+    {
+      "amount": 100,
+      "date": "YYYY-MM-DD"
+    }
+  ],
+  "certificates": [
+    {
+      "course_id": "course_id",
+      "date": "YYYY-MM-DD"
+    }
+  ]
+}
+
+Instructors:
+{
+  "_id": "instructor_id",
+  "name": "Name",
+  "specialization": "Specialization",
+  "email": "email@email.com"
+}
+
+

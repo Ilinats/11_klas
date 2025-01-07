@@ -1,0 +1,171 @@
+Endpoint-ове
+
+User management and authentication
+
+POST /users/register
+Description: Регистриране на нов потребител.
+Request Body:
+{
+  "name": "string",
+  "email": "string",
+  "password": "string",
+  "phone": "string"
+}
+
+
+POST /users/login
+Description: Аутентикира потребител и връща JWT токен.
+Request Body:
+{
+  "email": "string",
+  "password": "string"
+}
+
+
+GET /users/me
+Description: Fetch-ва профила на логнатия потребител.
+Headers:
+Authorization: Bearer <token>
+
+UPDATE /users/me
+Description: Актуализира профила на логнатия потребител.
+Headers:
+Authorization: Bearer <token>
+Request Body:
+{
+  "name": "string",
+  "phone": "string",
+  "email": "string",
+  "password": "string"
+}
+
+
+Book Inventory
+
+GET /books
+Description: Fetch-ва списък от всички книги.
+Query Parameters:
+search (optional, string): Термин за търсене на заглавие, автор или ISBN.
+available (optional, boolean): Филтриране по наличност.
+
+GET /books/{id}
+Description: Fetch-ва детайли за специфична книга.
+Path Parameter:
+id (string): Book ID.
+
+POST /books (Само библиотекар)
+Description: Добавя нова книга към инвентара.
+Headers:
+Authorization: Bearer <token>
+Request Body:
+{
+  "title": "string",
+  "description": "string",
+  "author": "string",
+  "year": "number",
+  "isbn": "string",
+  "quantity": "number"
+}
+
+UPDATE /books/{id} (Само библиотекар)
+Description: Актуализира данните за книгата или количеството.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Book ID.
+Request Body:
+{
+  "title": "string",
+  "description": "string",
+  "author": "string",
+  "year": "number",
+  "quantity": "number"
+}
+
+DELETE /books/{id} (Само библиотекар)
+Description: Премахнете книга от инвентара.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Book ID.
+
+
+Заемане и връщане на книги
+
+POST /books/{id}/borrow
+Description: Заемане на книга.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Book ID.
+
+POST /books/{id}/return
+Description: Връщане на заетата книга.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Book ID.
+
+POST /books/{id}/reserve
+Description: Резервиране на книга за заемане по-късно.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Book ID.
+
+
+ИСтория на заемане на потребителя
+
+GET /users/me/history
+Description: Fetch-ва историята на заемите на влезлия потребител.
+Headers:
+Authorization: Bearer <token>
+
+
+Endpoint-ове специфично за библиотекари
+
+GET /books/overdue
+Description: Виждане на списъка с просрочени книги.
+Headers:
+Authorization: Bearer <token>
+
+GET /users/{id}/history
+Description: Вижтдане на историята на заемите на конкретен потребител.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): User ID.
+
+
+Събития
+
+GET /events
+Description: Fetch-ва списък от събития.
+Query Parameters:
+search (optional, string): Термин за търсене за име или описание на събитието.
+
+POST /events (Само библиотекра)
+Description: Създаване на ново събитие.
+Headers:
+Authorization: Bearer <token>
+Request Body:
+{
+  "name": "string",
+  "description": "string",
+  "date": "YYYY-MM-DD",
+  "location": "string"
+}
+
+POST /events/{id}/register
+Description: Регистрация за събитие.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Event ID.
+
+POST /events/{id}/cancel
+Description: Отменяне на регистрацията за събитие.
+Headers:
+Authorization: Bearer <token>
+Path Parameter:
+id (string): Event ID.
