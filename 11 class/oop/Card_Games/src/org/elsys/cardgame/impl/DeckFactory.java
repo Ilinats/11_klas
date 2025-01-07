@@ -23,13 +23,40 @@ public class DeckFactory {
         for (Card card : cards) {
             if (isValidCardForGame(card, ranks, suits)) {
                 validCards.add(card);
-                if (validCards.size() == requiredSize) {
-                    return new DeckImpl(validCards, handSize);
-                }
             }
         }
-        throw new IllegalArgumentException("ERROR: Not enough valid cards for the game");
+
+        if (!isValidDeck(validCards, ranks)) {
+            throw new IllegalArgumentException("ERROR: Invalid deck composition. Each rank must have exactly 4 cards, one for each suit.");
+        }
+
+        if (validCards.size() != requiredSize) {
+            throw new IllegalArgumentException("ERROR: Not enough valid cards for the game");
+        }
+
+        return new DeckImpl(validCards, handSize);
     }
+
+    private static boolean isValidDeck(List<Card> cards, Rank[] ranks) {
+        for (Rank rank : ranks) {
+            int count = 0;
+            List<Suit> suitsSeen = new ArrayList<>();
+            for (Card card : cards) {
+                if (card.getRank() == rank) {
+                    if (suitsSeen.contains(card.getSuit())) {
+                        return false;
+                    }
+                    suitsSeen.add(card.getSuit());
+                    count++;
+                }
+            }
+            if (count != 4) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     private static boolean isValidCardForGame(Card card, Rank[] ranks, Suit[] suits) {
         for (Suit suit : suits) {

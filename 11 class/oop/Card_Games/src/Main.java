@@ -21,7 +21,7 @@ public class Main {
         }
 
         while (true) {
-            System.out.println("Game Type: (Please enter one of the following: War, Belote, Santase)");
+            System.out.println("Game Type: (Please enter one of the following: War, Belote, Santase or quit)");
             String gameType = scanner.nextLine().trim();
 
             if(gameType.equals("quit")) {
@@ -30,7 +30,14 @@ public class Main {
 
             assert cardStrings != null;
             for (String cardString : cardStrings) {
-                initialCards.add(parseCard(cardString, gameType));
+                try {
+                    initialCards.add(parseCard(cardString, gameType));
+                } catch (IllegalArgumentException e) {
+                    System.out.println("ERROR: Invalid card format: " + cardString);
+
+                    initialCards.clear();
+                    break;
+                }
             }
 
             createGame(initialCards, gameType);
@@ -83,73 +90,89 @@ public class Main {
         }
 
         Suit suit = parseSuit(cardString.charAt(0));
-        Rank rank;
+        Rank rank = null;
 
         if(gameType.equals("War")) {
-            rank = parseRankWar(cardString.substring(1));
+            try {
+                rank = parseRankWar(cardString.substring(1));
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR: Invalid rank: " + cardString.substring(1));
+            }
         } else if(gameType.equals("Belote")) {
-            rank = parseRankBelot(cardString.substring(1));
+            try {
+                rank = parseRankBelot(cardString.substring(1));
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR: Invalid rank: " + cardString.substring(1));
+            }
         } else if(gameType.equals("Santase")) {
-            rank = parseRankSantase(cardString.substring(1));
+            try {
+                rank = parseRankSantase(cardString.substring(1));
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR: Invalid rank: " + cardString.substring(1));
+            }
         } else {
             throw new IllegalArgumentException("Invalid game type: " + gameType);
+        }
+
+        if(rank == null) {
+            throw new IllegalArgumentException("Invalid rank: " + cardString.substring(1));
         }
 
         return new CardImpl(rank, suit);
     }
 
     private static Suit parseSuit(char suitChar) {
-        switch (suitChar) {
-            case 'S': return Suit.SPADES;
-            case 'H': return Suit.HEARTS;
-            case 'D': return Suit.DIAMONDS;
-            case 'C': return Suit.CLUBS;
-            default: throw new IllegalArgumentException("Invalid suit: " + suitChar);
-        }
+        return switch (suitChar) {
+            case 'S' -> Suit.SPADES;
+            case 'H' -> Suit.HEARTS;
+            case 'D' -> Suit.DIAMONDS;
+            case 'C' -> Suit.CLUBS;
+            default -> throw new IllegalArgumentException("Invalid suit: " + suitChar);
+        };
     }
 
     private static Rank parseRankWar(String rankString) {
-        switch (rankString) {
-            case "2": return WarRank.TWO;
-            case "3": return WarRank.THREE;
-            case "4": return WarRank.FOUR;
-            case "5": return WarRank.FIVE;
-            case "6": return WarRank.SIX;
-            case "7": return WarRank.SEVEN;
-            case "8": return WarRank.EIGHT;
-            case "9": return WarRank.NINE;
-            case "10": return WarRank.TEN;
-            case "J": return WarRank.JACK;
-            case "Q": return WarRank.QUEEN;
-            case "K": return WarRank.KING;
-            case "A": return WarRank.ACE;
-            default: throw new IllegalArgumentException("Invalid rank: " + rankString);
-        }
+        return switch (rankString) {
+            case "2" -> WarRank.TWO;
+            case "3" -> WarRank.THREE;
+            case "4" -> WarRank.FOUR;
+            case "5" -> WarRank.FIVE;
+            case "6" -> WarRank.SIX;
+            case "7" -> WarRank.SEVEN;
+            case "8" -> WarRank.EIGHT;
+            case "9" -> WarRank.NINE;
+            case "10" -> WarRank.TEN;
+            case "J" -> WarRank.JACK;
+            case "Q" -> WarRank.QUEEN;
+            case "K" -> WarRank.KING;
+            case "A" -> WarRank.ACE;
+            default -> throw new IllegalArgumentException("Invalid rank: " + rankString);
+        };
     }
 
     private static Rank parseRankBelot(String rankSting) {
-        switch (rankSting) {
-            case "7": return BelotRank.SEVEN;
-            case "8": return BelotRank.EIGHT;
-            case "9": return BelotRank.NINE;
-            case "10": return BelotRank.TEN;
-            case "J": return BelotRank.JACK;
-            case "Q": return BelotRank.QUEEN;
-            case "K": return BelotRank.KING;
-            case "A": return BelotRank.ACE;
-            default: throw new IllegalArgumentException("Invalid rank: " + rankSting);
-        }
+        return switch (rankSting) {
+            case "7" -> BelotRank.SEVEN;
+            case "8" -> BelotRank.EIGHT;
+            case "9" -> BelotRank.NINE;
+            case "10" -> BelotRank.TEN;
+            case "J" -> BelotRank.JACK;
+            case "Q" -> BelotRank.QUEEN;
+            case "K" -> BelotRank.KING;
+            case "A" -> BelotRank.ACE;
+            default -> throw new IllegalArgumentException("Invalid rank: " + rankSting);
+        };
     }
 
     private static Rank parseRankSantase(String rankString) {
-        switch (rankString) {
-            case "9": return SantaseRank.NINE;
-            case "J": return SantaseRank.JACK;
-            case "Q": return SantaseRank.QUEEN;
-            case "K": return SantaseRank.KING;
-            case "10": return SantaseRank.TEN;
-            case "A": return SantaseRank.ACE;
-            default: throw new IllegalArgumentException("Invalid rank: " + rankString);
-        }
+        return switch (rankString) {
+            case "9" -> SantaseRank.NINE;
+            case "J" -> SantaseRank.JACK;
+            case "Q" -> SantaseRank.QUEEN;
+            case "K" -> SantaseRank.KING;
+            case "10" -> SantaseRank.TEN;
+            case "A" -> SantaseRank.ACE;
+            default -> throw new IllegalArgumentException("Invalid rank: " + rankString);
+        };
     }
 }
