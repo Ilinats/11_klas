@@ -1,45 +1,35 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class Bank{
+public class Bank {
     private List<Account> accounts;
     private PriorityQueue<Transaction> transactions;
 
-    class MyComp implements Comparator<Transaction> {
-        public int compare(Transaction a, Transaction b) {
+    public Bank() {
+        this.accounts = new ArrayList<>();
+        this.transactions = new PriorityQueue<>((a, b) -> {
             Account fromAccount1 = getAccountByNumber(a.getFromAccount());
             Account fromAccount2 = getAccountByNumber(b.getFromAccount());
 
-            if (fromAccount1.getTypeUser() == TypeUser.COMPANY && fromAccount2.getTypeUser() == TypeUser.INDIVIDUAL) {
-                return -1;
-            } else if (fromAccount1.getTypeUser() == TypeUser.INDIVIDUAL && fromAccount2.getTypeUser() == TypeUser.COMPANY) {
-                return 1;
-            } else {
-                return 0;
-            }
-        }
+            return fromAccount1.getTypeUser().ordinal() - fromAccount2.getTypeUser().ordinal();
+        });
     }
 
-    public Bank() {
-        this.accounts = new ArrayList<>();
-        this.transactions = new PriorityQueue<>(new MyComp());
-    }
     public void addAccount(Account account) {
         this.accounts.add(account);
     }
 
     public void withdraw(int fromAccount, double amount) {
-        transactions.add(new Withdraw(amount, fromAccount));
+        transactions.add(new Withdraw(amount, fromAccount)); //3
     }
 
     public void addMoney(int toAccount, double amount) {
-        transactions.add(new Deposit(amount, toAccount));
+        transactions.add(new Deposit(amount, toAccount)); //1
     }
 
     public void transfer(int fromAccount, int toAccount, double amount) {
-        transactions.add(new Transfer(amount, fromAccount, toAccount));
+        transactions.add(new Transfer(amount, fromAccount, toAccount)); //2
     }
 
     public void flush() {
