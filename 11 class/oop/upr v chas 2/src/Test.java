@@ -1,9 +1,9 @@
 import java.util.List;
 
 public class Test {
-    private String date;
-    private String group;
-    private List<Task> questions;
+    private final String date;
+    private final String group;
+    private final List<Task> questions;
 
     public Test(String date, String group, List<Task> questions) {
         this.date = date;
