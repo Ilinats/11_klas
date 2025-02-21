@@ -1,0 +1,3 @@
+interface SmartDevice {
+    void turnOn();
+}
