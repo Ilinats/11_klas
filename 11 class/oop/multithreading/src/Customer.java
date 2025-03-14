@@ -13,6 +13,6 @@ class Customer implements Runnable {
     @Override
     public void run() {
         int ticketsRequested = random.nextInt(5) + 1;
-        bookingSystem.bookTicket(name, ticketsRequested);
+        bookingSystem.addRequest(new CustomerRequest(name, ticketsRequested));
     }
 }

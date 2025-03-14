@@ -20,6 +20,7 @@ public class TicketBookingApp {
             }
         }
 
+        bookingSystem.processRequests();
         System.out.println("Оставащи билети: " + bookingSystem.getAvailableTickets());
     }
 }
